@@ -1,0 +1,115 @@
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+@import 'locomotive-scroll/locomotive-scroll.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Design tokens (RGB channels so Tailwind can apply alpha) ---------- */
+:root {
+  --c-petal: 235 169 183;       /* #EBA9B7 — decorative / on dark */
+  --c-petal-soft: 248 222 228;  /* #F8DEE4 */
+  --c-petal-deep: 168 61 86;    /* #A83D56 — AA on cream */
+  --c-botanic: 31 61 43;        /* #1F3D2B */
+  --c-botanic-soft: 47 90 64;   /* #2F5A40 */
+  --c-botanic-mist: 220 230 218;
+  --c-cream: 251 246 236;       /* #FBF6EC */
+  --c-cream-deep: 241 230 208;  /* #F1E6D0 */
+  --c-gold: 201 165 90;         /* #C9A55A — decorative / on dark */
+  --c-gold-deep: 128 96 34;     /* #806022 — AA on cream */
+  --c-ink: 26 23 20;            /* #1A1714 */
+  --c-ink-soft: 74 66 58;       /* #4A423A — AA on cream */
+
+  /* Golden hour: sampled from the reference photos (see docs/golden-hour-meta-prompt.md) */
+  --c-sun-cream: 253 248 236;   /* #FDF8EC — highlight on backlit petals */
+  --c-sun-peach: 241 204 164;   /* #F1CCA4 */
+  --c-sun-apricot: 233 164 119; /* #E9A477 */
+  --c-sun-honey: 222 170 114;   /* #DEAA72 */
+  --c-sun-rose: 220 135 151;    /* #DC8797 — daisy petal mid-tone */
+  --c-sun-umber: 85 66 42;      /* #55422A — shaded stems; text scrim base */
+
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --nav-h: 4.5rem;
+
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-cream font-sans text-step-0 text-ink antialiased;
+    font-optical-sizing: auto;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+    font-variation-settings: 'SOFT' 100, 'WONK' 0;
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: rgb(var(--c-petal) / 0.6);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-petal-deep));
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  img {
+    @apply max-w-full;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-content px-6 md:px-10;
+  }
+  .eyebrow {
+    @apply font-sans text-step--1 font-semibold uppercase tracking-[0.2em];
+  }
+  /* Masked lines for split-text reveals */
+  .split-line-mask {
+    overflow: clip;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .input {
+    @apply min-h-[48px] w-full rounded-full border border-ink/20 bg-white/70 px-5 py-3 text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-petal-deep;
+  }
+  .input[aria-invalid='true'] {
+    @apply border-petal-deep;
+  }
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    @apply sr-only;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.6); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+@keyframes cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+/* Reduced motion: everything is visible and still. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "flower-show",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c green,magenta \"npm run dev -w @flower/api\" \"npm run dev -w @flower/web\"",
+    "build": "npm run build -w @flower/api && npm run build -w @flower/web",
+    "start": "concurrently -k -n api,web -c green,magenta \"npm run start -w @flower/api\" \"npm run preview -w @flower/web\"",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=18.18"
+  }
+}
